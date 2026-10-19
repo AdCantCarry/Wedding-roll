@@ -1,0 +1,1488 @@
+/* ==========================================================================
+   ROMANTIC PINK WEDDING LUCKY DRAW - DESIGN SYSTEM
+   LỄ CƯỚI ĐỨC & QUYÊN - SINGLE SCREEN VIEWPORT
+   ========================================================================== */
+
+:root {
+  /* Sweet Wedding Pink & Champagne Gold Palette */
+  --pink-bg-soft: #fff2f5;
+  --pink-bg-gradient: radial-gradient(circle at 50% 15%, #ffffff 0%, #ffe9f0 45%, #ffd6e2 100%);
+  
+  --pink-primary: #ff6584;
+  --pink-deep: #e83e68;
+  --pink-dark: #b81b45;
+  --pink-light: #ffebf1;
+  --pink-border: rgba(255, 101, 132, 0.35);
+
+  --gold-primary: #d4af37;
+  --gold-light: #fff3c4;
+  --gold-dark: #a17c13;
+  --gold-gradient: linear-gradient(135deg, #ffd768 0%, #d4af37 50%, #b8860b 100%);
+
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --card-border: rgba(255, 143, 171, 0.45);
+  --card-shadow: 0 10px 30px rgba(232, 62, 104, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+
+  --text-main: #3d1422;
+  --text-muted: #824d5d;
+  --text-pink: #d12956;
+  --text-gold: #9e750a;
+
+  /* Fonts */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --font-calligraphy: 'Great Vibes', cursive;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 40px;
+}
+
+/* Reset & Viewport lock */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden; /* NO SCROLLING */
+  font-family: var(--font-sans);
+  background: var(--pink-bg-gradient);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Simulated fullscreen mode if native API blocked */
+body.fullscreen-mode {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+}
+
+/* Ambient Floating Petals Canvas */
+.ambient-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Toast Notification */
+.toast-notification {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-60px);
+  background: #ffffff;
+  color: var(--pink-dark);
+  border: 2px solid var(--pink-primary);
+  padding: 10px 26px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.92rem;
+  box-shadow: 0 8px 24px rgba(232, 62, 104, 0.25);
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toast-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* App Viewport Container */
+.app-viewport {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 18px 10px;
+  gap: 10px;
+}
+
+/* ==========================================================================
+   TOP WEDDING HEADER (COMPACT ~56px)
+   ========================================================================== */
+
+.wedding-header {
+  height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 0 18px;
+  box-shadow: var(--card-shadow);
+  gap: 12px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wedding-rings-icon {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 2px 6px rgba(255, 101, 132, 0.4));
+  animation: gentleFloat 3s infinite ease-in-out;
+}
+
+.wedding-names-box {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.wedding-tagline {
+  font-family: var(--font-calligraphy);
+  font-size: 1.1rem;
+  color: var(--pink-deep);
+}
+
+.couple-names {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 0.5px;
+}
+
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.wedding-banner-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #ffe0e9 0%, #ffd0dc 50%, #ffe0e9 100%);
+  border: 1px solid var(--pink-border);
+  padding: 6px 20px;
+  border-radius: var(--radius-full);
+}
+
+.banner-title {
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 1.5px;
+  color: var(--pink-dark);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  color: var(--text-main);
+  border: 1.5px solid rgba(255, 101, 132, 0.25);
+  border-radius: var(--radius-md);
+  padding: 6px 12px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.header-btn:hover {
+  background: var(--pink-light);
+  border-color: var(--pink-primary);
+  transform: translateY(-2px);
+  color: var(--pink-dark);
+}
+
+.header-btn.gold {
+  background: linear-gradient(135deg, #fff9e6 0%, #ffeed1 100%);
+  border-color: #ffd768;
+  color: var(--text-gold);
+}
+
+.header-btn.danger {
+  background: #fff0f0;
+  border-color: #ffb8b8;
+  color: #d63031;
+}
+
+.header-btn.danger:hover {
+  background: #ff7675;
+  color: #fff;
+  border-color: #ff7675;
+}
+
+.header-btn.icon-only {
+  padding: 6px 10px;
+  font-size: 1rem;
+}
+
+.sound-wave {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.sound-wave i {
+  width: 2.5px;
+  height: 3px;
+  background: var(--pink-deep);
+  border-radius: 2px;
+}
+
+.sound-wave.playing i:nth-child(1) { animation: waveBar 0.8s infinite 0.1s ease-in-out; }
+.sound-wave.playing i:nth-child(2) { animation: waveBar 0.8s infinite 0.3s ease-in-out; }
+.sound-wave.playing i:nth-child(3) { animation: waveBar 0.8s infinite 0.2s ease-in-out; }
+.sound-wave.playing i:nth-child(4) { animation: waveBar 0.8s infinite 0.4s ease-in-out; }
+
+/* ==========================================================================
+   MAIN STAGE GRID (2 EQUAL COLUMNS - FITS IN REMAINING VIEWPORT)
+   ========================================================================== */
+
+.wedding-stage-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 46% 54%;
+  gap: 14px;
+  min-height: 0;
+}
+
+/* ==========================================================================
+   LEFT PANEL: CHIBI & GRAND REAL PHOTO STAGE
+   ========================================================================== */
+
+.mascot-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panel-header-mini {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: rgba(255, 235, 241, 0.65);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.mode-switch-group {
+  display: flex;
+  gap: 6px;
+}
+
+.switch-tab {
+  background: #ffffff;
+  border: 1.5px solid var(--pink-border);
+  color: var(--text-muted);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+}
+
+.switch-tab.active {
+  background: linear-gradient(135deg, var(--pink-primary), var(--pink-deep));
+  color: #ffffff;
+  border-color: var(--pink-deep);
+  box-shadow: 0 2px 8px rgba(232, 62, 104, 0.3);
+}
+
+.mascot-quick-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.action-pill-btn {
+  background: #ffffff;
+  border: 1px solid rgba(255, 101, 132, 0.3);
+  color: var(--pink-dark);
+  border-radius: 16px;
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+}
+
+.action-pill-btn:hover {
+  background: var(--pink-light);
+  transform: translateY(-1px);
+}
+
+/* Mascot & Photo Arena */
+.mascot-arena {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 65%, #ffffff 0%, #fff1f5 60%, #ffd9e5 100%);
+  min-height: 0;
+}
+
+.chibi-stage-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 8px;
+}
+
+/* Speech bubbles */
+.speech-bubble {
+  position: absolute;
+  top: -42px;
+  background: #ffffff;
+  color: var(--pink-dark);
+  border: 1.5px solid var(--pink-primary);
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(255, 101, 132, 0.25);
+  opacity: 0;
+  transform: scale(0.7) translateY(10px);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px 6px 0;
+  border-style: solid;
+  border-color: #ffffff transparent transparent;
+}
+
+.speech-bubble.show {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Mascot actors */
+.mascot-actor {
+  position: absolute;
+  bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.actor-img {
+  max-height: calc(100vh - 220px);
+  height: 270px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 14px rgba(210, 40, 85, 0.2));
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+
+.actor-shadow {
+  width: 80px;
+  height: 12px;
+  background: radial-gradient(ellipse at center, rgba(184, 27, 69, 0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  margin-top: -6px;
+}
+
+.actor-shadow.couple-shadow {
+  width: 140px;
+  height: 16px;
+}
+
+.groom-actor { left: -160px; }
+.bride-actor { right: -160px; }
+
+/* Center Couple Pose */
+.mascot-couple-center {
+  position: absolute;
+  bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  z-index: 6;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mascot-couple-center:hover {
+  transform: scale(1.05) translateY(-4px);
+}
+
+.couple-img {
+  max-height: calc(100vh - 210px);
+  height: 285px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(210, 40, 85, 0.25));
+}
+
+.heart-halo {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(255, 101, 132, 0.25) 0%, rgba(255, 215, 0, 0.15) 50%, transparent 75%);
+  border-radius: 50%;
+  filter: blur(8px);
+  z-index: -1;
+  animation: pulseLove 3s infinite alternate;
+}
+
+/* ==========================================================================
+   GRAND REAL PHOTO MODE (LARGE, PROMINENT, STANDALONE)
+   ========================================================================== */
+
+.real-photo-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px 20px;
+}
+
+.grand-gold-frame {
+  position: relative;
+  height: 94%;
+  max-height: calc(100vh - 150px);
+  padding: 8px;
+  background: linear-gradient(135deg, #ffd768 0%, #ffffff 40%, #d4af37 100%);
+  border-radius: var(--radius-md);
+  box-shadow: 0 14px 35px rgba(232, 62, 104, 0.25), 0 0 25px rgba(212, 175, 55, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.large-real-photo {
+  height: 100%;
+  max-height: calc(100vh - 180px);
+  width: auto;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  display: block;
+}
+
+.grand-frame-ribbon {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #d4af37, #f7688c, #d4af37);
+  color: #fff;
+  font-family: var(--font-calligraphy);
+  font-size: 1.25rem;
+  padding: 4px 24px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   RIGHT PANEL: 3D LUCKY MACHINE
+   ========================================================================== */
+
+.machine-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 24px;
+  gap: 14px;
+}
+
+/* Status Indicator */
+.machine-status-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid var(--pink-border);
+  padding: 6px 20px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 8px rgba(255, 101, 132, 0.1);
+}
+
+.status-indicator {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #2ecc71;
+  box-shadow: 0 0 8px #2ecc71;
+}
+
+.status-indicator.spinning {
+  background: #ffd700;
+  box-shadow: 0 0 10px #ffd700;
+  animation: pulseGold 0.5s infinite;
+}
+
+.status-text {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--pink-dark);
+}
+
+/* 3D Digit Reels Box */
+.slot-display-card {
+  background: linear-gradient(180deg, #ffebf1 0%, #ffd4e2 100%);
+  border: 3.5px solid #d4af37;
+  outline: 2px solid #ff8fab;
+  border-radius: var(--radius-lg);
+  padding: 16px 26px;
+  box-shadow: 0 12px 30px rgba(232, 62, 104, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.8), 0 0 25px rgba(212, 175, 55, 0.3);
+  max-width: 580px;
+  width: 100%;
+}
+
+.slot-lights-row {
+  display: flex;
+  justify-content: space-around;
+  padding: 2px 0;
+}
+
+.slot-lights-row.top-row { margin-bottom: 10px; }
+.slot-lights-row.bottom-row { margin-top: 10px; }
+
+.slot-lights-row i {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff5e7e;
+  box-shadow: 0 0 6px #ff5e7e;
+  animation: bulbBlink 1.2s infinite alternate ease-in-out;
+}
+
+.slot-lights-row i:nth-child(even) {
+  background: #ffd700;
+  box-shadow: 0 0 6px #ffd700;
+  animation-delay: 0.6s;
+}
+
+/* Reels Container */
+.reels-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  background: #ffffff;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 2px solid rgba(212, 175, 55, 0.5);
+  box-shadow: inset 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.reel-box {
+  position: relative;
+  width: 125px;
+  height: 155px;
+  background: linear-gradient(180deg, #ffeef3 0%, #ffffff 40%, #ffffff 60%, #ffeef3 100%);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(255, 101, 132, 0.15);
+  border: 2.5px solid var(--pink-primary);
+}
+
+.reel-glass-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.reel-edge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 36px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.reel-edge.top-edge {
+  top: 0;
+  background: linear-gradient(180deg, rgba(255, 215, 226, 0.95) 0%, transparent 100%);
+}
+
+.reel-edge.bottom-edge {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(255, 215, 226, 0.95) 0%, transparent 100%);
+}
+
+.reel-strip {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.1s linear;
+}
+
+.digit {
+  height: 155px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 6rem;
+  font-weight: 900;
+  color: var(--pink-dark);
+  text-shadow: 0 2px 4px rgba(210, 40, 85, 0.15);
+  user-select: none;
+}
+
+.reel-box.spinning .reel-strip {
+  filter: blur(3.5px);
+}
+
+.reel-box.locked {
+  border-color: #d4af37;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+  animation: reelLockBounce 0.3s ease-out;
+}
+
+/* Machine Controls */
+.machine-controls-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.huge-spin-button {
+  background: linear-gradient(135deg, #ff758c 0%, #ff5277 50%, #d81b49 100%);
+  color: #ffffff;
+  border: 2px solid #fff;
+  border-radius: var(--radius-full);
+  padding: 14px 48px;
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(232, 62, 104, 0.4), 0 0 16px rgba(255, 117, 140, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.huge-spin-button:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(232, 62, 104, 0.55);
+}
+
+.huge-spin-button:active {
+  transform: translateY(2px) scale(0.98);
+}
+
+.huge-spin-button.is-spinning {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  border-color: #ffd768;
+}
+
+/* Stats Pill Bar */
+.stats-summary-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.stat-pill {
+  background: #ffffff;
+  border: 1px solid rgba(255, 101, 132, 0.25);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.stat-pill strong {
+  color: var(--text-main);
+  margin-left: 4px;
+}
+
+.stat-pill.highlight strong {
+  color: #2ecc71;
+  font-size: 0.95rem;
+}
+
+.stat-pill.gold strong {
+  color: var(--gold-dark);
+  font-size: 0.95rem;
+}
+
+.toggle-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid rgba(255, 101, 132, 0.25);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-pill input { display: none; }
+
+.toggle-bullet {
+  width: 28px;
+  height: 16px;
+  background: #e2e8f0;
+  border-radius: 12px;
+  position: relative;
+  transition: background 0.2s;
+}
+
+.toggle-bullet::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.toggle-pill input:checked + .toggle-bullet {
+  background: var(--pink-primary);
+}
+
+.toggle-pill input:checked + .toggle-bullet::after {
+  transform: translateX(12px);
+}
+
+/* Empty State Card */
+.empty-state-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff5f8;
+  border: 1px dashed var(--pink-primary);
+  border-radius: var(--radius-md);
+  padding: 6px 16px;
+  font-size: 0.82rem;
+  color: var(--pink-dark);
+}
+
+.btn-text-action {
+  background: none;
+  border: none;
+  color: var(--pink-deep);
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   FOOTER TICKER (COMPACT ~38px)
+   ========================================================================== */
+
+.wedding-footer-ticker {
+  height: 38px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 0 16px;
+  gap: 12px;
+  box-shadow: 0 2px 10px rgba(232, 62, 104, 0.08);
+}
+
+.ticker-badge {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--pink-dark);
+  white-space: nowrap;
+}
+
+.ticker-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+  flex: 1;
+  scrollbar-width: none;
+}
+
+.ticker-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--pink-light);
+  border: 1px solid var(--pink-border);
+  border-radius: 14px;
+  padding: 3px 10px;
+  font-size: 0.78rem;
+}
+
+.ticker-chip .code {
+  font-weight: 800;
+  color: var(--pink-deep);
+}
+
+.ticker-chip .name {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.no-winner-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ==========================================================================
+   WINNER CELEBRATION MODAL (CLEAN: CODE + NAME ONLY)
+   ========================================================================== */
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(45, 14, 25, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.winner-popup-box {
+  position: relative;
+  background: radial-gradient(circle at 50% 20%, #ffffff 0%, #fff0f5 55%, #ffd4e2 100%);
+  border: 3.5px solid #d4af37;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(184, 27, 69, 0.35), 0 0 35px rgba(212, 175, 55, 0.4);
+  max-width: 760px;
+  width: 100%;
+  padding: 28px 24px 24px;
+  overflow: hidden;
+  animation: winnerCardPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.winner-rays-bg {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg at 50% 50%, rgba(255, 215, 0, 0.15) 0deg, transparent 25deg, rgba(255, 101, 132, 0.15) 50deg, transparent 75deg, rgba(255, 215, 0, 0.15) 100deg, transparent 125deg, rgba(255, 101, 132, 0.15) 150deg, transparent 175deg, rgba(255, 215, 0, 0.15) 200deg, transparent 225deg, rgba(255, 101, 132, 0.15) 250deg, transparent 275deg, rgba(255, 215, 0, 0.15) 300deg, transparent 325deg, rgba(255, 101, 132, 0.15) 360deg);
+  animation: rotateRays 30s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.winner-popup-body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.popup-mascot-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 125px;
+  flex-shrink: 0;
+}
+
+.celebrate-avatar {
+  height: 180px;
+  filter: drop-shadow(0 8px 14px rgba(210, 40, 85, 0.25));
+  animation: mascotCelebrateBounce 0.5s infinite alternate ease-in-out;
+}
+
+.celebrate-avatar.bride {
+  animation-delay: 0.25s;
+}
+
+.mini-speech {
+  background: #ffffff;
+  color: var(--pink-dark);
+  border: 1px solid var(--pink-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 14px;
+  margin-top: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.winner-card-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card-top-tag {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--pink-dark);
+  margin-bottom: 12px;
+}
+
+.lucky-number-frame {
+  background: #ffffff;
+  border: 2px solid var(--gold-primary);
+  border-radius: var(--radius-md);
+  padding: 8px 36px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.25);
+}
+
+.num-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.num-digits {
+  font-family: var(--font-serif);
+  font-size: 4.4rem;
+  font-weight: 900;
+  color: var(--pink-dark);
+  line-height: 1.1;
+  display: block;
+}
+
+.winner-guest-name {
+  font-family: var(--font-serif);
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 18px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.winner-actions-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Modal Windows (Excel, Winners, Settings) */
+.modal-window {
+  background: #ffffff;
+  border: 2px solid var(--pink-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  max-height: 88vh;
+  width: 100%;
+  max-width: 860px;
+  overflow: hidden;
+  animation: modalScaleUp 0.25s ease-out;
+}
+
+.modal-window.compact-window {
+  max-width: 480px;
+}
+
+.modal-window-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--pink-border);
+  background: var(--pink-light);
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-title h3 {
+  font-size: 1.15rem;
+  color: var(--pink-dark);
+}
+
+.modal-close-x {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-window-body {
+  padding: 18px 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-window-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-top: 1px solid var(--pink-border);
+  background: #fafafa;
+}
+
+/* Drop Upload Box */
+.drop-upload-box {
+  border: 2px dashed var(--pink-primary);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  text-align: center;
+  background: var(--pink-light);
+  margin-bottom: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.drop-upload-box:hover, .drop-upload-box.dragover {
+  background: #ffd6e2;
+  border-color: var(--pink-dark);
+}
+
+.upload-icon-graphic {
+  font-size: 2.2rem;
+  margin-bottom: 4px;
+}
+
+.upload-text-group h4 {
+  font-size: 0.95rem;
+  color: var(--pink-dark);
+  margin-bottom: 10px;
+}
+
+.click-browse {
+  text-decoration: underline;
+  color: var(--pink-deep);
+}
+
+.upload-actions-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.modal-search-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.clean-search-input, .clean-input {
+  width: 100%;
+  background: #ffffff;
+  border: 1.5px solid #ffccd9;
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  outline: none;
+  color: var(--text-main);
+  transition: border-color 0.2s;
+}
+
+.clean-search-input:focus, .clean-input:focus {
+  border-color: var(--pink-primary);
+  box-shadow: 0 0 8px rgba(255, 101, 132, 0.2);
+}
+
+.table-scroll-area {
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid #ffd0dc;
+  border-radius: var(--radius-sm);
+}
+
+/* Clean Table */
+.clean-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.clean-table th {
+  background: #ffe3ec;
+  color: var(--pink-dark);
+  font-weight: 700;
+  padding: 10px 12px;
+  position: sticky;
+  top: 0;
+  border-bottom: 1.5px solid var(--pink-border);
+}
+
+.clean-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ffedf2;
+  color: var(--text-main);
+}
+
+.clean-table tr:hover td {
+  background: #fff5f8;
+}
+
+.badge-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.badge-tag.ready {
+  background: #e6f9ed;
+  color: #27ae60;
+  border: 1px solid #abebc6;
+}
+
+.badge-tag.won {
+  background: #fff4e5;
+  color: #d35400;
+  border: 1px solid #fad7a0;
+}
+
+/* Buttons */
+.btn-pink-gold {
+  background: linear-gradient(135deg, var(--pink-primary) 0%, var(--pink-deep) 100%);
+  color: #ffffff;
+  border: 1px solid #fff;
+  border-radius: var(--radius-full);
+  padding: 10px 24px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(232, 62, 104, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.btn-pink-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(232, 62, 104, 0.45);
+}
+
+.btn-glass {
+  background: #ffffff;
+  color: var(--text-main);
+  border: 1px solid #ffccd9;
+  border-radius: var(--radius-full);
+  padding: 10px 18px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-small-gold {
+  background: var(--gold-gradient);
+  color: #3b2804;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-small-glass {
+  background: #ffffff;
+  color: var(--text-main);
+  border: 1px solid #ffd0dc;
+  border-radius: 16px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-small-danger {
+  background: #ffebeb;
+  color: #e74c3c;
+  border: 1px solid #ffc9c9;
+  border-radius: 16px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-small-danger:hover {
+  background: #e74c3c;
+  color: #fff;
+}
+
+/* Form Settings */
+.form-group-item {
+  margin-bottom: 14px;
+}
+
+.form-field-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--pink-dark);
+  margin-bottom: 5px;
+}
+
+.slider-val-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.range-slider {
+  flex: 1;
+  accent-color: var(--pink-deep);
+  cursor: pointer;
+}
+
+.range-text {
+  font-weight: 800;
+  color: var(--pink-deep);
+  min-width: 30px;
+}
+
+.check-options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.check-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+/* Animations */
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes waveBar {
+  0%, 100% { height: 3px; }
+  50% { height: 12px; }
+}
+
+@keyframes pulseLove {
+  0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.4; }
+  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.7; }
+}
+
+@keyframes bulbBlink {
+  0% { opacity: 0.3; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes pulseGold {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes reelLockBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes modalScaleUp {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes winnerCardPop {
+  0% { opacity: 0; transform: scale(0.7); }
+  70% { transform: scale(1.03); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes rotateRays {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes mascotCelebrateBounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-14px); }
+}
+
+@keyframes groomWalkStep {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px) rotate(1.5deg); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes brideWalkStep {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px) rotate(-1.5deg); }
+  100% { transform: translateY(0); }
+}
+
+/* Printable Voucher */
+@media print {
+  body * { visibility: hidden; }
+  #printVoucherContainer, #printVoucherContainer * { visibility: visible; }
+  #printVoucherContainer { position: absolute; left: 0; top: 0; width: 100%; display: block !important; }
+}
+
+.printable-voucher-card {
+  border: 4px solid var(--pink-deep);
+  border-radius: var(--radius-md);
+  padding: 30px;
+  background: #ffffff;
+  color: var(--text-main);
+  text-align: center;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.voucher-border {
+  border: 2px dashed #d4af37;
+  padding: 20px;
+  border-radius: var(--radius-sm);
+}
+
+.voucher-border h3 {
+  font-family: var(--font-serif);
+  color: var(--pink-dark);
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+}
+
+.voucher-code-big {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--pink-deep);
+  margin: 14px 0;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 900px) {
+  html, body {
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .app-viewport {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .wedding-stage-grid {
+    grid-template-columns: 1fr;
+  }
+}
