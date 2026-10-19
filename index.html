@@ -4,28 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vòng Quay May Mắn | Lễ Cưới Đức & Quyên</title>
-  
-  <!-- Google Fonts -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&display=swap" rel="stylesheet">
-  
-  <!-- Vendor Scripts -->
+
   <script src="assets/vendor/xlsx.full.min.js"></script>
   <script src="assets/vendor/canvas-confetti.browser.min.js"></script>
-  
-  <!-- Stylesheet -->
+
   <link rel="stylesheet" href="index.css?v=mobile_v3">
 </head>
 <body>
-  <!-- Ambient Falling Petals Canvas -->
+
   <canvas id="ambientCanvas" class="ambient-canvas"></canvas>
 
-  <!-- Notification Toast -->
   <div id="toastNotification" class="toast-notification"></div>
 
   <div class="app-viewport">
-    <!-- Top Wedding Header -->
+
     <header class="wedding-header">
       <div class="header-left">
         <span class="wedding-rings-icon">💍</span>
@@ -44,7 +40,7 @@
       </div>
 
       <div class="header-right">
-        <!-- Background Music -->
+
         <button id="btnToggleMusic" class="header-btn" title="Bật / Tắt nhạc cưới">
           <span class="btn-icon">🎵</span>
           <span class="btn-text">Nhạc Cưới</span>
@@ -53,40 +49,33 @@
           </span>
         </button>
 
-        <!-- Excel Import Button -->
         <button id="btnOpenExcelModal" class="header-btn" title="Nhập danh sách khách mời từ Excel">
           <span class="btn-icon">📁</span>
           <span class="btn-text">Nhập Excel (<span id="guestCountBadge">0</span>)</span>
         </button>
 
-        <!-- Winners History Button -->
         <button id="btnOpenWinners" class="header-btn gold" title="Xem danh sách trúng">
           <span class="btn-icon">🏆</span>
           <span class="btn-text">Đã Trúng (<span id="winnerCountBadge">0</span>)</span>
         </button>
 
-        <!-- Clear Data Button directly on header -->
         <button id="btnDirectClearData" class="header-btn danger" title="Xóa toàn bộ danh sách khách mời">
           <span class="btn-icon">🗑️</span>
           <span class="btn-text">Xóa Dữ Liệu</span>
         </button>
 
-        <!-- Settings -->
         <button id="btnOpenSettings" class="header-btn icon-only" title="Cài đặt">
           <span>⚙️</span>
         </button>
 
-        <!-- Fullscreen -->
         <button id="btnToggleFullscreen" class="header-btn icon-only" title="Toàn màn hình">
           <span id="fullscreenIcon">⛶</span>
         </button>
       </div>
     </header>
 
-    <!-- Main Stage Grid (Single Screen - No Scroll) -->
     <main class="wedding-stage-grid">
-      
-      <!-- Left Column: Mascot & Photo Stage -->
+
       <section class="mascot-panel">
         <div class="panel-header-mini">
           <div class="mode-switch-group">
@@ -105,11 +94,10 @@
           </div>
         </div>
 
-        <!-- Interactive Mascot & Real Photo Arena -->
         <div class="mascot-arena" id="mascotStageArena">
-          <!-- Chibi Characters Area -->
+
           <div class="chibi-stage-wrap" id="chibiActorsContainer">
-            <!-- Groom Chibi (Walks from Left) -->
+
             <div class="mascot-actor groom-actor" id="groomActor">
               <div class="speech-bubble groom-bubble" id="groomBubble">
                 <span>Anh tới với em đây! ❤️</span>
@@ -118,7 +106,6 @@
               <div class="actor-shadow"></div>
             </div>
 
-            <!-- Bride Chibi (Walks from Right) -->
             <div class="mascot-actor bride-actor" id="brideActor">
               <div class="speech-bubble bride-bubble" id="brideBubble">
                 <span>Em chờ anh mãi! ✨</span>
@@ -127,7 +114,6 @@
               <div class="actor-shadow"></div>
             </div>
 
-            <!-- Combined Couple Pose (Center) -->
             <div class="mascot-couple-center" id="coupleChibiPose">
               <div class="heart-halo"></div>
               <div class="speech-bubble couple-bubble" id="coupleBubble">
@@ -138,7 +124,6 @@
             </div>
           </div>
 
-          <!-- Real Photo Frame Mode (Large & Prominent) -->
           <div class="real-photo-wrap" id="realPhotoStage" style="display: none;">
             <div class="grand-gold-frame">
               <img src="assets/images/couple_real.jpg" alt="Ảnh cưới thực tế Đức & Quyên" class="large-real-photo">
@@ -148,23 +133,20 @@
         </div>
       </section>
 
-      <!-- Right Column: Lucky Draw Machine -->
       <section class="machine-panel">
-        
-        <!-- Status Bar -->
+
         <div class="machine-status-bar">
           <span class="status-indicator"></span>
           <span class="status-text" id="statusMsg">Sẵn sàng quay số may mắn!</span>
         </div>
 
-        <!-- 3D Digit Reels Box -->
         <div class="slot-display-card">
           <div class="slot-lights-row top-row">
             <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
           </div>
 
           <div class="reels-row" id="reelsContainer">
-            <!-- Reel 1: Hundreds -->
+
             <div class="reel-box" id="reelBoxHundreds">
               <div class="reel-glass-glare"></div>
               <div class="reel-strip" id="reelHundreds">
@@ -174,7 +156,6 @@
               <div class="reel-edge bottom-edge"></div>
             </div>
 
-            <!-- Reel 2: Tens -->
             <div class="reel-box" id="reelBoxTens">
               <div class="reel-glass-glare"></div>
               <div class="reel-strip" id="reelTens">
@@ -184,7 +165,6 @@
               <div class="reel-edge bottom-edge"></div>
             </div>
 
-            <!-- Reel 3: Units -->
             <div class="reel-box" id="reelBoxUnits">
               <div class="reel-glass-glare"></div>
               <div class="reel-strip" id="reelUnits">
@@ -200,7 +180,6 @@
           </div>
         </div>
 
-        <!-- Spin Controls -->
         <div class="machine-controls-row">
           <button id="btnStartRoll" class="huge-spin-button">
             <span class="spin-icon">🎰</span>
@@ -208,7 +187,6 @@
           </button>
         </div>
 
-        <!-- Statistics & Quick Setup Bar -->
         <div class="stats-summary-bar">
           <div class="stat-pill">
             <span class="stat-name">Tổng khách:</span>
@@ -222,7 +200,6 @@
           </label>
         </div>
 
-        <!-- Empty State Prompt if no guests -->
         <div class="empty-state-card" id="emptyStatePrompt" style="display: none;">
           <span>⚠️ Chưa có khách mời trong danh sách.</span>
           <button id="btnPromptUpload" class="btn-text-action">Tải file Excel lên</button>
@@ -232,7 +209,6 @@
       </section>
     </main>
 
-    <!-- Bottom Ticker: Recent Winners (Compact 1-line) -->
     <footer class="wedding-footer-ticker">
       <div class="ticker-badge">
         <span>🎉</span> VỪA TRÚNG:
@@ -243,27 +219,23 @@
     </footer>
   </div>
 
-  <!-- ================= MODALS ================= -->
-
-  <!-- 1. Winner Celebration Modal (Streamlined: Only Code + Name, No Phone/Wish) -->
   <div class="modal-backdrop" id="winnerModalOverlay" style="display: none;">
     <div class="winner-popup-box">
       <div class="winner-rays-bg"></div>
-      
+
       <div class="winner-popup-body">
-        <!-- Left Groom Mascot -->
+
         <div class="popup-mascot-side groom-side">
           <img src="assets/images/groom_chibi.png" alt="Chú rể" class="celebrate-avatar">
           <div class="mini-speech">Chúc mừng! 🥂</div>
         </div>
 
-        <!-- Center Winner Details -->
         <div class="winner-card-center">
           <div class="card-top-tag">🎊 CHÚC MỪNG CHIẾN THẮNG 🎊</div>
-          
+
           <div class="lucky-number-frame">
             <span class="num-label">MÃ SỐ MAY MẮN</span>
-            <span class="num-digits" id="winnerLuckyCode">007</span>
+            <span class="num-digits" id="winnerLuckyCode">000</span>
           </div>
 
           <h2 class="winner-guest-name" id="winnerName">Nguyễn Văn G</h2>
@@ -278,7 +250,6 @@
           </div>
         </div>
 
-        <!-- Right Bride Mascot -->
         <div class="popup-mascot-side bride-side">
           <img src="assets/images/bride_chibi.png" alt="Cô dâu" class="celebrate-avatar bride">
           <div class="mini-speech">Tuyệt vời! 💖</div>
@@ -287,7 +258,6 @@
     </div>
   </div>
 
-  <!-- 2. Guest Management & Excel Upload Modal -->
   <div class="modal-backdrop" id="guestsModalOverlay" style="display: none;">
     <div class="modal-window">
       <div class="modal-window-header">
@@ -299,7 +269,7 @@
       </div>
 
       <div class="modal-window-body">
-        <!-- Excel Upload Box -->
+
         <div class="drop-upload-box" id="excelDropZone">
           <input type="file" id="excelFileInput" accept=".xlsx, .xls, .csv" style="display: none;">
           <div class="upload-icon-graphic">📑</div>
@@ -319,7 +289,6 @@
           </div>
         </div>
 
-        <!-- Search Bar -->
         <div class="modal-search-row">
           <input type="text" id="guestSearchInput" placeholder="Tìm kiếm theo Tên, Mã số..." class="clean-search-input">
           <button id="btnAddNewGuest" class="btn-small-gold">
@@ -327,7 +296,6 @@
           </button>
         </div>
 
-        <!-- Guests Table -->
         <div class="table-scroll-area">
           <table class="clean-table" id="guestsTable">
             <thead>
@@ -341,7 +309,7 @@
               </tr>
             </thead>
             <tbody id="guestsTableBody">
-              <!-- Rendered via JS -->
+
             </tbody>
           </table>
         </div>
@@ -354,7 +322,6 @@
     </div>
   </div>
 
-  <!-- 3. Winners History Modal -->
   <div class="modal-backdrop" id="winnersModalOverlay" style="display: none;">
     <div class="modal-window">
       <div class="modal-window-header">
@@ -390,7 +357,7 @@
               </tr>
             </thead>
             <tbody id="winnersTableBody">
-              <!-- Rendered via JS -->
+
             </tbody>
           </table>
         </div>
@@ -402,7 +369,6 @@
     </div>
   </div>
 
-  <!-- 4. Settings Modal -->
   <div class="modal-backdrop" id="settingsModalOverlay" style="display: none;">
     <div class="modal-window compact-window">
       <div class="modal-window-header">
@@ -457,7 +423,6 @@
     </div>
   </div>
 
-  <!-- 5. Add Guest Modal -->
   <div class="modal-backdrop" id="addGuestModalOverlay" style="display: none;">
     <div class="modal-window compact-window">
       <div class="modal-window-header">
@@ -490,13 +455,12 @@
     </div>
   </div>
 
-  <!-- Printable Hidden Voucher -->
   <div id="printVoucherContainer" class="print-voucher-container" style="display: none;">
     <div class="printable-voucher-card">
       <div class="voucher-border">
         <h3>PHIẾU CHỨNG NHẬN MAY MẮN</h3>
         <p class="voucher-sub" id="voucherSubtitle">Lễ Cưới Đức &amp; Quyên</p>
-        <div class="voucher-code-big">MÃ SỐ: <span id="voucherLuckyNumber">007</span></div>
+        <div class="voucher-code-big">MÃ SỐ: <span id="voucherLuckyNumber">000</span></div>
         <div class="voucher-info">
           <p>Khách Mời: <strong id="voucherWinnerName">Nguyễn Văn G</strong></p>
         </div>

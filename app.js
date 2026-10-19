@@ -1,14 +1,5 @@
-/**
- * ROMANTIC PINK WEDDING LUCKY DRAW - LỄ CƯỚI ĐỨC & QUYÊN
- * Author: Antigravity Agent
- */
-
 (function () {
   'use strict';
-
-  // ==========================================================================
-  // 1. DEFAULT DATA & STATE
-  // ==========================================================================
 
   const DEFAULT_GUESTS = [
     { id: '1', code: '001', name: 'Nguyễn Văn A', phone: '0901234567', won: false, wonAt: null },
@@ -46,7 +37,6 @@
     musicPlaying: false
   };
 
-  // Toast notification helper
   function showToast(message) {
     const toast = document.getElementById('toastNotification');
     if (!toast) return;
@@ -57,10 +47,6 @@
       toast.classList.remove('show');
     }, 2800);
   }
-
-  // ==========================================================================
-  // 2. WEB AUDIO SYNTHESIZER
-  // ==========================================================================
 
   let audioCtx = null;
 
@@ -164,13 +150,12 @@
     } catch (e) { }
   }
 
-  // Romantic Wedding Chords
   let musicInterval = null;
   const chords = [
-    [261.63, 329.63, 392.00, 493.88], // Cmaj7
-    [220.00, 261.63, 329.63, 392.00], // Am7
-    [174.61, 220.00, 261.63, 329.63], // Fmaj7
-    [196.00, 246.94, 293.66, 392.00]  // G
+    [261.63, 329.63, 392.00, 493.88],
+    [220.00, 261.63, 329.63, 392.00],
+    [174.61, 220.00, 261.63, 329.63],
+    [196.00, 246.94, 293.66, 392.00]
   ];
   let chordIndex = 0;
 
@@ -212,10 +197,6 @@
     }
   }
 
-  // ==========================================================================
-  // 3. STORAGE & GUARANTEED DATA CLEARING
-  // ==========================================================================
-
   function loadStateFromStorage() {
     try {
       const isEmptyExplicit = localStorage.getItem('wedding_roll_empty_flag') === 'true';
@@ -240,7 +221,7 @@
       const savedSettings = localStorage.getItem('wedding_roll_settings');
       if (savedSettings) {
         const parsed = JSON.parse(savedSettings);
-        // Force couple names to Đức & Quyên if still old
+
         if (parsed.coupleNames === 'Quang Linh & Mai Anh' || parsed.coupleNames === 'Duc & Quyen') {
           parsed.coupleNames = 'Đức & Quyên';
         }
@@ -272,7 +253,6 @@
     } catch (e) { }
   }
 
-  // INSTANT, RELIABLE CLEAR DATA (NO BLOCKING WINDOW.CONFIRM)
   function clearAllDataClean() {
     STATE.guests = [];
     STATE.winners = [];
@@ -305,10 +285,6 @@
     renderWinnersTable();
     showToast('✨ Đã nạp lại 15 khách mời mẫu!');
   }
-
-  // ==========================================================================
-  // 4. MASCOT ANIMATION & WALK SEQUENCE
-  // ==========================================================================
 
   const coupleQuotes = [
     'Chúc quý khách may mắn rinh quà nha! 🎉',
@@ -434,10 +410,6 @@
     }
   }
 
-  // ==========================================================================
-  // 5. 3D SLOT MACHINE ROLLING REELS
-  // ==========================================================================
-
   function setupReelDigits(reelEl, initialDigit = 0) {
     if (!reelEl) return;
     reelEl.innerHTML = '';
@@ -450,7 +422,7 @@
     setReelPosition(reelEl, initialDigit);
   }
 
-  let lastRolledDigits = [0, 0, 7];
+  let lastRolledDigits = [0, 0, 0];
 
   function setReelPosition(reelEl, digit) {
     const itemHeight = getReelItemHeight();
@@ -616,10 +588,6 @@
     showWinnerModal(winner);
   }
 
-  // ==========================================================================
-  // 6. WINNER MODAL & CONFETTI (CLEAN: CODE + NAME ONLY)
-  // ==========================================================================
-
   function triggerWinnerCelebration() {
     if (!STATE.settings.confetti || typeof confetti !== 'function') return;
 
@@ -654,7 +622,6 @@
     const luckyCode = document.getElementById('winnerLuckyCode');
     const winnerName = document.getElementById('winnerName');
 
-    // ONLY SHOW LUCKY CODE & NAME (NO PHONE & NO WISH!)
     if (luckyCode) luckyCode.textContent = winner.code;
     if (winnerName) winnerName.textContent = winner.name;
 
@@ -700,10 +667,6 @@
     playCheerChime();
     showToast(`🏆 Đã trao giải cho: ${STATE.currentCandidate.name}!`);
   }
-
-  // ==========================================================================
-  // 7. EXCEL PARSER (SHEETJS)
-  // ==========================================================================
 
   function handleExcelFile(file) {
     if (!file) return;
@@ -837,10 +800,6 @@
     XLSX.writeFile(wb, `Danh_Sach_Trung_Thuong_${Date.now()}.xlsx`);
   }
 
-  // ==========================================================================
-  // 8. UI RENDERING & COUNTERS
-  // ==========================================================================
-
   function updateCandidatesSummary() {
     const total = STATE.guests.length;
     const elTotal = document.getElementById('valTotalGuests');
@@ -969,10 +928,6 @@
     });
   }
 
-  // ==========================================================================
-  // 9. AMBIENT FALLING PETALS CANVAS
-  // ==========================================================================
-
   function initAmbientCanvas() {
     const canvas = document.getElementById('ambientCanvas');
     if (!canvas) return;
@@ -1042,10 +997,6 @@
     render();
   }
 
-  // ==========================================================================
-  // 10. ROBUST FULLSCREEN TOGGLE
-  // ==========================================================================
-
   function toggleFullscreen() {
     const doc = document;
     const docEl = doc.documentElement;
@@ -1057,7 +1008,7 @@
         requestFs.call(docEl)
           .then(() => updateFullscreenIcon(true))
           .catch(() => {
-            // Simulated Fullscreen fallback
+
             doc.body.classList.add('fullscreen-mode');
             updateFullscreenIcon(true);
             showToast('Đã mở toàn màn hình (chế độ trình chiếu)');
@@ -1084,12 +1035,8 @@
     if (icon) icon.textContent = isFullscreen ? '✕' : '⛶';
   }
 
-  // ==========================================================================
-  // 11. BIND EVENTS & INITIALIZE
-  // ==========================================================================
-
   function bindEvents() {
-    // 1. Roll actions
+
     const btnSpin = document.getElementById('btnStartRoll');
     if (btnSpin) btnSpin.addEventListener('click', startLuckyDraw);
 
@@ -1107,14 +1054,12 @@
       }
     });
 
-    // 2. Mascot Actions
     const btnReplay = document.getElementById('btnReplayWalk');
     if (btnReplay) btnReplay.addEventListener('click', runMascotWalkSequence);
 
     const couplePose = document.getElementById('coupleChibiPose');
     if (couplePose) couplePose.addEventListener('click', handleCoupleChibiClick);
 
-    // Mascot Mode Switcher (Chibi vs Ảnh Thật)
     const btnModeChibi = document.getElementById('btnModeChibi');
     const btnModeReal = document.getElementById('btnModeReal');
     const chibiStage = document.getElementById('chibiActorsContainer');
@@ -1138,7 +1083,6 @@
       });
     }
 
-    // 3. Clear Data Button (Header & Modal)
     const btnDirectClear = document.getElementById('btnDirectClearData');
     if (btnDirectClear) btnDirectClear.addEventListener('click', clearAllDataClean);
 
@@ -1148,7 +1092,6 @@
     const btnPromptLoad = document.getElementById('btnPromptLoadSample');
     if (btnPromptLoad) btnPromptLoad.addEventListener('click', loadSampleDataAgain);
 
-    // 4. Header buttons & Modals
     const btnMusic = document.getElementById('btnToggleMusic');
     if (btnMusic) btnMusic.addEventListener('click', toggleBackgroundMusic);
 
@@ -1195,7 +1138,6 @@
     if (coupleNamesDisplay) coupleNamesDisplay.addEventListener('click', openSettingsModal);
     if (btnCloseSettings) btnCloseSettings.addEventListener('click', () => settingsModal.style.display = 'none');
 
-    // 5. Winner modal buttons
     const btnConfirm = document.getElementById('btnConfirmWinner');
     if (btnConfirm) btnConfirm.addEventListener('click', confirmWinner);
 
@@ -1206,7 +1148,6 @@
       if (statusMsg) statusMsg.textContent = 'Đã hủy kết quả. Nhấn QUAY SỐ để quay lại!';
     });
 
-    // 6. Excel Upload & Dropzone
     const dropZone = document.getElementById('excelDropZone');
     const fileInput = document.getElementById('excelFileInput');
     const btnBrowse = document.getElementById('btnTriggerBrowse');
@@ -1249,7 +1190,6 @@
       guestSearch.addEventListener('input', (e) => renderGuestsTable(e.target.value));
     }
 
-    // 7. Add Guest
     const btnAddNew = document.getElementById('btnAddNewGuest');
     const addModal = document.getElementById('addGuestModalOverlay');
     const btnCloseAdd = document.getElementById('btnCloseAddGuest');
@@ -1295,7 +1235,6 @@
       });
     }
 
-    // 8. Winners Actions
     const btnExport = document.getElementById('btnExportWinnersExcel');
     if (btnExport) btnExport.addEventListener('click', exportWinnersToExcel);
 
@@ -1317,7 +1256,6 @@
       });
     }
 
-    // 9. Exclude Toggle & Settings
     const chkExclude = document.getElementById('chkExcludeWinners');
     if (chkExclude) {
       chkExclude.addEventListener('change', (e) => {
@@ -1385,10 +1323,6 @@
     if (chkExclude) chkExclude.checked = STATE.settings.excludeWinners;
   }
 
-  // ==========================================================================
-  // 12. BOOTSTRAP
-  // ==========================================================================
-
   function init() {
     loadStateFromStorage();
     applySettingsToUI();
@@ -1400,7 +1334,7 @@
     const r3 = document.getElementById('reelUnits');
     setupReelDigits(r1, 0);
     setupReelDigits(r2, 0);
-    setupReelDigits(r3, 7);
+    setupReelDigits(r3, 0);
 
     initAmbientCanvas();
     bindEvents();
