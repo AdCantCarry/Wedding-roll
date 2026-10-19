@@ -348,8 +348,9 @@
       groomActor.style.transition = 'left 2.2s cubic-bezier(0.25, 1, 0.5, 1)';
       brideActor.style.transition = 'right 2.2s cubic-bezier(0.25, 1, 0.5, 1)';
 
-      groomActor.style.left = 'calc(50% - 130px)';
-      brideActor.style.right = 'calc(50% - 120px)';
+      const isMobile = window.innerWidth <= 680;
+      groomActor.style.left = isMobile ? 'calc(50% - 85px)' : 'calc(50% - 130px)';
+      brideActor.style.right = isMobile ? 'calc(50% - 80px)' : 'calc(50% - 120px)';
 
       setTimeout(() => {
         if (groomBubble) groomBubble.classList.add('show');
@@ -449,6 +450,8 @@
     setReelPosition(reelEl, initialDigit);
   }
 
+  let lastRolledDigits = [0, 0, 7];
+
   function setReelPosition(reelEl, digit) {
     const itemHeight = getReelItemHeight();
     reelEl.style.transform = `translateY(${-(digit * itemHeight)}px)`;
@@ -458,6 +461,21 @@
     const box = document.querySelector('.reel-box');
     return box ? box.offsetHeight : 155;
   }
+
+  function updateReelPositions() {
+    const r1 = document.getElementById('reelHundreds');
+    const r2 = document.getElementById('reelTens');
+    const r3 = document.getElementById('reelUnits');
+    if (r1) setReelPosition(r1, lastRolledDigits[0]);
+    if (r2) setReelPosition(r2, lastRolledDigits[1]);
+    if (r3) setReelPosition(r3, lastRolledDigits[2]);
+  }
+
+  window.addEventListener('resize', () => {
+    if (!STATE.isSpinning) {
+      updateReelPositions();
+    }
+  });
 
   function startLuckyDraw() {
     if (STATE.isSpinning) return;
@@ -563,6 +581,7 @@
         b3.classList.remove('spinning');
         b3.classList.add('locked');
         setReelPosition(r3, d3);
+        lastRolledDigits = [d1, d2, d3];
         playReelLockSound();
 
         setTimeout(() => finishSpin(winner), 350);
