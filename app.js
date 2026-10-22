@@ -2,21 +2,21 @@
   'use strict';
 
   const DEFAULT_GUESTS = [
-    { id: '1', code: '001', name: 'Nguyễn Văn A', phone: '0901234567', won: false, wonAt: null },
-    { id: '2', code: '002', name: 'Nguyễn Văn B', phone: '0901234568', won: false, wonAt: null },
-    { id: '3', code: '003', name: 'Nguyễn Văn C', phone: '0901234569', won: false, wonAt: null },
-    { id: '4', code: '004', name: 'Nguyễn Văn D', phone: '0901234570', won: false, wonAt: null },
-    { id: '5', code: '005', name: 'Nguyễn Văn E', phone: '0901234571', won: false, wonAt: null },
-    { id: '6', code: '006', name: 'Nguyễn Văn F', phone: '0901234572', won: false, wonAt: null },
-    { id: '7', code: '007', name: 'Nguyễn Văn G', phone: '0901234573', won: false, wonAt: null },
-    { id: '8', code: '008', name: 'Nguyễn Văn H', phone: '0901234574', won: false, wonAt: null },
-    { id: '9', code: '009', name: 'Nguyễn Văn K', phone: '0901234575', won: false, wonAt: null },
-    { id: '10', code: '010', name: 'Nguyễn Văn J', phone: '0901234576', won: false, wonAt: null },
-    { id: '11', code: '011', name: 'Trần Thị Mai', phone: '0912345678', won: false, wonAt: null },
-    { id: '12', code: '012', name: 'Lê Hoàng Nam', phone: '0923456789', won: false, wonAt: null },
-    { id: '13', code: '013', name: 'Phạm Quỳnh Anh', phone: '0934567890', won: false, wonAt: null },
-    { id: '14', code: '014', name: 'Đỗ Minh Tuấn', phone: '0945678901', won: false, wonAt: null },
-    { id: '15', code: '015', name: 'Vũ Bích Ngọc', phone: '0956789012', won: false, wonAt: null }
+    { id: '1', code: '001', name: 'Nguyễn Văn A', phone: '0901234567', won: false, wonAt: null, wish: 'Trăm năm hạnh phúc, vạn sự như ý! 💐' },
+    { id: '2', code: '002', name: 'Nguyễn Văn B', phone: '0901234568', won: false, wonAt: null, wish: 'Chúc hai bạn sớm có thiên thần nhỏ đáng yêu! 👶' },
+    { id: '3', code: '003', name: 'Nguyễn Văn C', phone: '0901234569', won: false, wonAt: null, wish: 'Cung hỷ cung hỷ, tình nồng thắm mãi không phai! 🥂' },
+    { id: '4', code: '004', name: 'Nguyễn Văn D', phone: '0901234570', won: false, wonAt: null, wish: 'Chúc tân lang tân nương răng long đầu bạc! 💍' },
+    { id: '5', code: '005', name: 'Nguyễn Văn E', phone: '0901234571', won: false, wonAt: null, wish: 'Chúc hai bạn mãi mãi yêu thương và hạnh phúc! 💖' },
+    { id: '6', code: '006', name: 'Nguyễn Văn F', phone: '0901234572', won: false, wonAt: null, wish: 'Trăm năm tình viên mãn, bạc đầu nghĩa phu thê! 🌸' },
+    { id: '7', code: '007', name: 'Nguyễn Văn G', phone: '0901234573', won: false, wonAt: null, wish: 'Chúc tình yêu của hai bạn luôn ngập tràn mật ngọt! 🍯' },
+    { id: '8', code: '008', name: 'Nguyễn Văn H', phone: '0901234574', won: false, wonAt: null, wish: 'Hạnh phúc đong đầy, gia đạo bình an thịnh vượng! ✨' },
+    { id: '9', code: '009', name: 'Nguyễn Văn K', phone: '0901234575', won: false, wonAt: null, wish: 'Chúc tổ ấm nhỏ luôn rộn rã tiếng cười vui! 🕊️' },
+    { id: '10', code: '010', name: 'Nguyễn Văn J', phone: '0901234576', won: false, wonAt: null, wish: 'Chúc hai bạn nắm chặt tay nhau đi suốt cuộc đời! 💕' },
+    { id: '11', code: '011', name: 'Trần Thị Mai', phone: '0912345678', won: false, wonAt: null, wish: 'Mãi mãi mặn nồng và ngọt ngào như ngày đầu! 🌹' },
+    { id: '12', code: '012', name: 'Lê Hoàng Nam', phone: '0923456789', won: false, wonAt: null, wish: 'Chúc đôi tân lang tân nương trọn đời hạnh phúc! 🎊' },
+    { id: '13', code: '013', name: 'Phạm Quỳnh Anh', phone: '0934567890', won: false, wonAt: null, wish: 'Chúc hai bạn luôn rạng rỡ và ngập tràn niềm vui! 🌷' },
+    { id: '14', code: '014', name: 'Đỗ Minh Tuấn', phone: '0945678901', won: false, wonAt: null, wish: 'Chúc mừng hạnh phúc lứa đôi, trăm năm tình thắm! 🍾' },
+    { id: '15', code: '015', name: 'Vũ Bích Ngọc', phone: '0956789012', won: false, wonAt: null, wish: 'Yêu thương gắn kết, sớm đón hoàng tử công chúa! 🎈' }
   ];
 
   const STATE = {
@@ -607,13 +607,31 @@
     }, 350);
   }
 
+  const DEFAULT_WEDDING_WISHES = [
+    'Trăm năm hạnh phúc, đầu bạc răng long, vạn sự như ý! 💐',
+    'Chúc hai bạn sớm có thiên thần nhỏ, gia đình ngập tràn tiếng cười! 👶✨',
+    'Cung hỷ cung hỷ, tình nồng thắm mãi không phai! 🥂',
+    'Chúc tân lang tân nương trăm năm hoà hợp, trọn đời yêu thương! 💖',
+    'Hôn nhân viên mãn, hạnh phúc bền lâu, bạc đầu nghĩa phu thê! 💍🌸'
+  ];
+
   function showWinnerModal(winner) {
     const modal = document.getElementById('winnerModalOverlay');
     const luckyCode = document.getElementById('winnerLuckyCode');
     const winnerName = document.getElementById('winnerName');
+    const winnerWish = document.getElementById('winnerWishText');
 
     if (luckyCode) luckyCode.textContent = winner.code;
     if (winnerName) winnerName.textContent = winner.name;
+
+    if (winnerWish) {
+      if (winner.wish && winner.wish.trim()) {
+        winnerWish.textContent = winner.wish.trim();
+      } else {
+        const hashIdx = Math.abs((parseInt(winner.code, 10) || winner.name.length || 0)) % DEFAULT_WEDDING_WISHES.length;
+        winnerWish.textContent = DEFAULT_WEDDING_WISHES[hashIdx];
+      }
+    }
 
     if (modal) modal.style.display = 'flex';
   }
@@ -638,11 +656,14 @@
       guest.wonAt = timeStr;
     }
 
+    const wishText = STATE.currentCandidate.wish || (document.getElementById('winnerWishText') ? document.getElementById('winnerWishText').textContent : '');
+
     STATE.winners.unshift({
       id: Date.now().toString(),
       code: STATE.currentCandidate.code,
       name: STATE.currentCandidate.name,
       phone: STATE.currentCandidate.phone,
+      wish: wishText,
       time: timeStr
     });
 
@@ -691,7 +712,7 @@
     const headerRow = rows[0].map(h => (h || '').toString().toLowerCase().trim());
     const norm = str => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 
-    let colName = -1, colCode = -1, colPhone = -1;
+    let colName = -1, colCode = -1, colPhone = -1, colWish = -1;
 
     headerRow.forEach((col, idx) => {
       const n = norm(col);
@@ -704,9 +725,13 @@
       if (colPhone === -1 && (n.includes('so dien thoai') || n.includes('dien thoai') || n.includes('sdt') || n.includes('phone'))) {
         colPhone = idx;
       }
+      if (colWish === -1 && (n.includes('chuc') || n.includes('wish') || n.includes('loi chuc') || n.includes('tin nhan') || n.includes('ghi chu') || n.includes('note'))) {
+        colWish = idx;
+      }
     });
 
     if (colName === -1 && rows[0].length >= 2) colName = 1;
+    if (colWish === -1 && rows[0].length >= 4) colWish = 3;
     if (colCode === -1 && rows[0].length >= 5) colCode = 4;
     else if (colCode === -1 && rows[0].length >= 1) colCode = rows[0].length - 1;
 
@@ -718,6 +743,7 @@
       let name = (colName !== -1 && row[colName]) ? row[colName].toString().trim() : '';
       let code = (colCode !== -1 && row[colCode]) ? row[colCode].toString().trim() : '';
       let phone = (colPhone !== -1 && row[colPhone]) ? row[colPhone].toString().trim() : '';
+      let wish = (colWish !== -1 && row[colWish]) ? row[colWish].toString().trim() : '';
 
       if (!name && !code) continue;
 
@@ -732,6 +758,7 @@
         code: code,
         name: name || `Khách ${code}`,
         phone: phone,
+        wish: wish,
         won: false,
         wonAt: null
       });
@@ -777,11 +804,11 @@
     }
 
     const data = [
-      ['STT', 'Mã Số May Mắn', 'Họ và Tên', 'Thời Gian Trúng']
+      ['STT', 'Mã Số May Mắn', 'Họ và Tên', 'Lời Chúc', 'Thời Gian Trúng']
     ];
 
     STATE.winners.forEach((w, idx) => {
-      data.push([idx + 1, w.code, w.name, w.time]);
+      data.push([idx + 1, w.code, w.name, w.wish || '', w.time]);
     });
 
     const ws = XLSX.utils.aoa_to_sheet(data);
@@ -889,7 +916,10 @@
       <tr>
         <td style="text-align: center;">${idx + 1}</td>
         <td style="text-align: center; font-weight: 900; color: var(--pink-dark);">${w.code}</td>
-        <td style="font-weight: 700;">${w.name}</td>
+        <td style="font-weight: 700;">
+          ${w.name}
+          ${w.wish ? `<div style="font-size: 0.78rem; font-weight: normal; font-style: italic; color: var(--pink-dark); margin-top: 2px;">💌 “${w.wish}”</div>` : ''}
+        </td>
         <td style="text-align: center; font-size: 0.8rem; color: var(--text-muted);">${w.time}</td>
         <td style="text-align: center;">
           <button class="btn-small-danger btn-delete-winner" data-id="${w.id}" style="padding: 2px 6px; font-size: 0.72rem;">✕</button>
@@ -1205,6 +1235,8 @@
         document.getElementById('newGuestName').value = '';
         document.getElementById('newGuestCode').value = (STATE.guests.length + 1).toString().padStart(3, '0');
         document.getElementById('newGuestPhone').value = '';
+        const wishEl = document.getElementById('newGuestWish');
+        if (wishEl) wishEl.value = '';
         if (addModal) addModal.style.display = 'flex';
       });
     }
@@ -1215,6 +1247,8 @@
         const name = document.getElementById('newGuestName').value.trim();
         const code = document.getElementById('newGuestCode').value.trim();
         const phone = document.getElementById('newGuestPhone').value.trim();
+        const wishEl = document.getElementById('newGuestWish');
+        const wish = wishEl ? wishEl.value.trim() : '';
 
         if (!name || !code) {
           alert('Vui lòng điền Họ tên và Mã số may mắn!');
@@ -1226,6 +1260,7 @@
           code: code,
           name: name,
           phone: phone,
+          wish: wish,
           won: false,
           wonAt: null
         });
