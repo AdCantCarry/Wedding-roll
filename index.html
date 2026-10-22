@@ -41,9 +41,9 @@
 
       <div class="header-right">
 
-        <button id="btnToggleMusic" class="header-btn" title="Bật / Tắt nhạc cưới">
+        <button id="btnToggleMusic" class="header-btn" title="Bật / Tắt nhạc">
           <span class="btn-icon">🎵</span>
-          <span class="btn-text">Nhạc Cưới</span>
+          <span class="btn-text">Nhạc</span>
           <span class="sound-wave" id="soundWave">
             <i></i><i></i><i></i><i></i>
           </span>
@@ -51,7 +51,7 @@
 
         <button id="btnOpenExcelModal" class="header-btn" title="Nhập danh sách khách mời từ Excel">
           <span class="btn-icon">📁</span>
-          <span class="btn-text">Nhập Excel (<span id="guestCountBadge">0</span>)</span>
+          <span class="btn-text">Nhập (<span id="guestCountBadge">0</span>)</span>
         </button>
 
         <button id="btnOpenWinners" class="header-btn gold" title="Xem danh sách trúng">
@@ -242,7 +242,7 @@
 
           <div class="winner-actions-group">
             <button id="btnConfirmWinner" class="btn-pink-gold">
-              <span>🏆</span> Xác Nhận Trao Giải
+               Xác Nhận
             </button>
             <button id="btnRedraw" class="btn-glass">
               <span>🔄</span> Hủy / Quay Lại
@@ -468,6 +468,10 @@
       </div>
     </div>
   </div>
+
+  <audio id="weddingBgm" loop preload="auto">
+    <source src="assets/audio/nhac.mp4" type="audio/mp4">
+  </audio>
 
   <script src="app.js"></script>
 </body>

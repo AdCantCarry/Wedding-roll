@@ -150,49 +150,39 @@
     } catch (e) { }
   }
 
-  let musicInterval = null;
-  const chords = [
-    [261.63, 329.63, 392.00, 493.88],
-    [220.00, 261.63, 329.63, 392.00],
-    [174.61, 220.00, 261.63, 329.63],
-    [196.00, 246.94, 293.66, 392.00]
-  ];
-  let chordIndex = 0;
+  function getBgMusic() {
+    let bgMusic = document.getElementById('weddingBgm');
+    if (!bgMusic) {
+      bgMusic = new Audio('assets/audio/nhac.mp4');
+      bgMusic.id = 'weddingBgm';
+      bgMusic.loop = true;
+      document.body.appendChild(bgMusic);
+    }
+    bgMusic.volume = 0.55;
+    return bgMusic;
+  }
 
   function toggleBackgroundMusic() {
     initAudio();
-    STATE.musicPlaying = !STATE.musicPlaying;
+    const bgMusic = getBgMusic();
     const soundWave = document.getElementById('soundWave');
 
-    if (STATE.musicPlaying) {
-      if (soundWave) soundWave.classList.add('playing');
-      const playNextChord = () => {
-        if (!STATE.musicPlaying || !audioCtx) return;
-        const curChord = chords[chordIndex % chords.length];
-        chordIndex++;
-        curChord.forEach(freq => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-          gain.gain.setValueAtTime(0, audioCtx.currentTime);
-          gain.gain.linearRampToValueAtTime(0.022, audioCtx.currentTime + 1.2);
-          gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 3.8);
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-          osc.start();
-          osc.stop(audioCtx.currentTime + 4.0);
+    if (bgMusic.paused) {
+      const playPromise = bgMusic.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          STATE.musicPlaying = true;
+          if (soundWave) soundWave.classList.add('playing');
+          showToast('Đang phát nhạc cưới 🎵');
+        }).catch(err => {
+          console.warn('Lỗi phát nhạc:', err);
+          showToast('Vui lòng bấm lại một lần nữa để phát nhạc');
         });
-      };
-      playNextChord();
-      musicInterval = setInterval(playNextChord, 4000);
-      showToast('Đã bật nhạc cưới lãng mạn 🎵');
-    } else {
-      if (soundWave) soundWave.classList.remove('playing');
-      if (musicInterval) {
-        clearInterval(musicInterval);
-        musicInterval = null;
       }
+    } else {
+      bgMusic.pause();
+      STATE.musicPlaying = false;
+      if (soundWave) soundWave.classList.remove('playing');
       showToast('Đã tắt nhạc cưới');
     }
   }
@@ -1094,6 +1084,20 @@
 
     const btnMusic = document.getElementById('btnToggleMusic');
     if (btnMusic) btnMusic.addEventListener('click', toggleBackgroundMusic);
+
+    const bgmEl = document.getElementById('weddingBgm');
+    if (bgmEl) {
+      bgmEl.addEventListener('play', () => {
+        STATE.musicPlaying = true;
+        const soundWave = document.getElementById('soundWave');
+        if (soundWave) soundWave.classList.add('playing');
+      });
+      bgmEl.addEventListener('pause', () => {
+        STATE.musicPlaying = false;
+        const soundWave = document.getElementById('soundWave');
+        if (soundWave) soundWave.classList.remove('playing');
+      });
+    }
 
     const btnFullscreen = document.getElementById('btnToggleFullscreen');
     if (btnFullscreen) btnFullscreen.addEventListener('click', toggleFullscreen);
